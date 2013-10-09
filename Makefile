@@ -7,7 +7,7 @@ TEXTURE_BLACKLIST= bricks_aligntest.jpg \
 		
 
 Q3MAP2_FLAGS= -meta -v
-Q3MAP2=/home/bazzy/Documents/misc/Xonotic/xonotic/netradiant/install/q3map2
+Q3MAP2=q3map2
 
 PK3_ADD=zip -p $(PK3NAME)
 REMOVE_FILE=rm -f
