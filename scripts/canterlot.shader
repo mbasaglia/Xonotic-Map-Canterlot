@@ -86,3 +86,14 @@ textures/canterlot/window_light
 		blendFunc add
 	}
 }
+
+textures/canterlot/grate
+{
+	qer_editorimage textures/canterlot/grate.png
+	cull none
+	surfaceparm trans
+	{
+		map textures/canterlot/grate.png
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
