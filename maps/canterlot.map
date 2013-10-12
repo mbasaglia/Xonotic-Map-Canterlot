@@ -15888,3 +15888,51 @@ brushDef
 "angle" "89.999992"
 "targetname" "sewer_teleport1"
 }
+// entity 187
+{
+"classname" "light"
+"origin" "1504.000000 -1896.000000 -640.000000"
+"light" "50"
+}
+// entity 188
+{
+"classname" "light"
+"origin" "1232.000000 -1784.000000 -616.000000"
+"light" "100"
+}
+// entity 189
+{
+"classname" "light"
+"origin" "864.000000 -1824.000000 -616.000000"
+"light" "50"
+}
+// entity 190
+{
+"classname" "light"
+"origin" "872.000000 808.000000 -472.000000"
+"light" "50"
+}
+// entity 191
+{
+"classname" "light"
+"origin" "1232.000000 592.000000 -608.000000"
+"light" "100"
+}
+// entity 192
+{
+"classname" "light"
+"origin" "1080.000000 -2000.000000 -616.000000"
+"light" "50"
+}
+// entity 193
+{
+"classname" "light"
+"origin" "864.000000 640.000000 -608.000000"
+"light" "50"
+}
+// entity 194
+{
+"classname" "light"
+"origin" "960.000000 920.000000 -608.000000"
+"light" "50"
+}
