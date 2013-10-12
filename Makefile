@@ -8,10 +8,33 @@
 # TEXTURE_BLACKLIST
 #	list of files in textures/$(MAPNAME) that must not be copiend in the pk3
 #-------------------
+# q3map2 options
+#-------------------
+# BASEPATH
+#	Game installation directory
+# HOMEPATH
+#	Game user directory
+# Q3MAP2
+#	Command used to compile the map
+# Q3MAP2_FLAGS
+#	Global flags
+# Q3MAP2_FLAGS_BSP
+#	Flags used during the bsp pass
+# Q3MAP2_FLAGS_VIS
+#	Flags used during the -vis pass
+# Q3MAP2_FLAGS_LIGHT
+#	Flags used during the -light pass
+#-------------------
 # targets
 #-------------------
 # all
 #	Compile the map in a bsp
+# bsp_vis
+#	Compile -vis pass
+# bsp_light
+#	Compile -light pass
+# bsp_full
+#	Compile with -vis and -light passes
 # dist
 #	Make a tarball containing all files in the current directory
 # pk3
@@ -36,12 +59,18 @@
 MAPNAME=canterlot
 VERSION=_v003
 
+BASEPATH=~/share/Xonotic/
+HOMEPATH=~/.xonotic/
+
 TEXTURE_BLACKLIST= bricks_aligntest.jpg \
 		bricks_aligntest_corner.jpg \
 		bricks_aligntest_corner1.jpg
 		
 
-Q3MAP2_FLAGS= -meta -v
+Q3MAP2_FLAGS= -v -connect 127.0.0.1:39000 -game xonotic -fs_basepath "$(BASEPATH)" -fs_homepath "$(HOMEPATH)" -fs_game data 
+Q3MAP2_FLAGS_BSP= -meta -v
+Q3MAP2_FLAGS_VIS= -vis -saveprt
+Q3MAP2_FLAGS_LIGHT= -light -fast
 Q3MAP2=q3map2
 
 PK3_ADD=zip -p $(PK3NAME)
@@ -72,7 +101,7 @@ RENAMED_MINIMAP=gfx/$(NEWNAME)_mini.tga
 __RENAME_INTERNAL_FILE_ACTION=echo
 
 .SUFFIXES: .bsp .map
-.PHONY: clean dist pk3 rename rename_copy __rename_internal release
+.PHONY: clean dist pk3 rename rename_copy __rename_internal release bsp_full bsp_vis bsp_light
 
 
 all: $(MAP_COMPILED)
@@ -91,7 +120,18 @@ clean:
 	$(REMOVE_FILE) $(PK3NAME) $(DIST_NAME)
 
 %.bsp : %.map
-	$(Q3MAP2) $(Q3MAP2_FLAGS) $(MAP_SOURCE) $*
+	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_BSP)   $*.map
+
+bsp_vis: $(MAP_COMPILED)
+bsp_vis:
+	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_VIS)   $(MAP_SOURCE)
+bsp_light: $(MAP_COMPILED)
+bsp_light:
+	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_LIGHT) $(MAP_SOURCE)
+
+bsp_full: bsp_vis
+bsp_full: bsp_light
+bsp_full:
 
 gfx/%_mini.tga : %.bsp
 	$(Q3MAP2) -minimap -o gfx/$*_mini.tga $(MAP_COMPILED)
@@ -121,7 +161,7 @@ __rename_internal:
 	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_SCREENSHOT)) $(RENAMED_MAP_SCREENSHOT)
 	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MINIMAP))        $(RENAMED_MINIMAP)
 
-release: $(MAP_COMPILED)
+release: bsp_full
 release: $(MINIMAP)
 release:
 	make rename_link NEWNAME=$(MAPNAME)$(VERSION)
