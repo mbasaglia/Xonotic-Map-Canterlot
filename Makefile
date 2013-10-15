@@ -46,7 +46,9 @@
 # gfx/%_mini.tga
 #	Compile a minimap from a map
 # release
-#	Compile, rename_link to $(MAPNAME)$(VERSION) and create pk3
+#	Compile (bsp_full), rename_link to $(MAPNAME)$(VERSION) and create pk3
+# release_nocompile
+#	Does not perform the bsp_full compile
 # rename
 #	Rename files from $(MAPNAME).* to $(NEWNAME).*
 # rename_copy
@@ -57,7 +59,7 @@
 #	Used by rename, rename_copy, rename_link.
 
 MAPNAME=canterlot
-VERSION=_v003
+VERSION=_v004
 
 BASEPATH=~/share/Xonotic/
 HOMEPATH=~/.xonotic/
@@ -99,7 +101,7 @@ RENAMED_MAP_INFO=maps/$(NEWNAME).mapinfo
 RENAMED_MAP_SCREENSHOT=maps/$(NEWNAME).jpg
 RENAMED_MINIMAP=gfx/$(NEWNAME)_mini.tga
 # RENAMED_TEXTUREDIR=textures/$(NEWNAME)
-RENAMED_MAP_WAYPOINTS=maps/$(MAPNAME).waypoints
+RENAMED_MAP_WAYPOINTS=maps/$(NEWNAME).waypoints
 __RENAME_INTERNAL_FILE_ACTION=echo
 
 .SUFFIXES: .bsp .map
@@ -166,7 +168,11 @@ __rename_internal:
 	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_WAYPOINTS))  $(RENAMED_MAP_WAYPOINTS)
 
 release: bsp_full
-release: $(MINIMAP)
+release: release_nocompile
 release:
+
+release_nocompile: $(MAP_COMPILED)
+release_nocompile: $(MINIMAP)
+release_nocompile:
 	make rename_link NEWNAME=$(MAPNAME)$(VERSION)
 	make pk3 MAPNAME=$(MAPNAME)$(VERSION) TEXTUREDIR=$(TEXTUREDIR)
