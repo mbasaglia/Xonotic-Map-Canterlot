@@ -6,7 +6,11 @@
 # VERSION
 #	suffix used on release
 # TEXTURE_BLACKLIST
-#	list of files in textures/$(MAPNAME) that must not be copiend in the pk3
+#	list of files in textures that must not be copiend in the pk3
+# EXTRA_FILES_RENAME
+#	additional files that will be added to the pk3 and renamed by rename* targets
+# EXTRA_DIRS
+#	additional directories that will be recursively added to the pk3
 #-------------------
 # q3map2 options
 #-------------------
@@ -46,9 +50,13 @@
 # gfx/%_mini.tga
 #	Compile a minimap from a map
 # release
+#	Compile (only bsp), rename_link to $(MAPNAME)$(VERSION) and create pk3
+# release_compile
 #	Compile (bsp_full), rename_link to $(MAPNAME)$(VERSION) and create pk3
 # release_nocompile
-#	Does not perform the bsp_full compile
+#	Does not perform directly any compilation
+# bump_nocompile
+#	Touches files in order to avoid recompilation
 # rename
 #	Rename files from $(MAPNAME).* to $(NEWNAME).*
 # rename_copy
@@ -59,17 +67,17 @@
 #	Used by rename, rename_copy, rename_link.
 
 MAPNAME=canterlot
-VERSION=_v004
+VERSION=_v005
 
-BASEPATH=~/share/Xonotic/
-HOMEPATH=~/.xonotic/
+BASEPATH=$(HOME)/share/Xonotic/
+HOMEPATH=$(HOME)/.xonotic/
 
-TEXTURE_BLACKLIST= bricks_aligntest.jpg \
-		bricks_aligntest_corner.jpg \
-		bricks_aligntest_corner1.jpg
-		
+TEXTURE_BLACKLIST= work_files
+EXTRA_DIRS=
+EXTRA_FILES_RENAME=
 
-Q3MAP2_FLAGS= -v -connect 127.0.0.1:39000 -game xonotic -fs_basepath "$(BASEPATH)" -fs_homepath "$(HOMEPATH)" -fs_game data 
+Q3MAP2_FLAGS_EXTRA=
+Q3MAP2_FLAGS= -v -connect 127.0.0.1:39000 -game xonotic -fs_basepath "$(BASEPATH)" -fs_homepath "$(HOMEPATH)" -fs_game data $(Q3MAP2_FLAGS_EXTRA)
 Q3MAP2_FLAGS_BSP= -meta -v
 Q3MAP2_FLAGS_VIS= -vis -saveprt
 Q3MAP2_FLAGS_LIGHT= -light -fast
@@ -88,24 +96,18 @@ MAP_INFO=maps/$(MAPNAME).mapinfo
 MAP_SCREENSHOT=maps/$(MAPNAME).jpg
 MAP_WAYPOINTS=maps/$(MAPNAME).waypoints
 MINIMAP=gfx/$(MAPNAME)_mini.tga
-TEXTUREDIR=textures/$(MAPNAME)
+TEXTUREDIR=textures
 TEXTURES=$(filter-out $(addprefix $(TEXTUREDIR)/,$(TEXTURE_BLACKLIST)), $(wildcard $(TEXTUREDIR)/*))
 SCRIPTS= $(wildcard scripts/*)
 DIST_NAME=$(MAPNAME).tar.gz
 DIST_FILES=$(filter-out $(DIST_NAME) $(PK3NAME), $(wildcard *))
 
 NEWNAME=$(MAPNAME)
-RENAMED_MAP_SOURCE=maps/$(NEWNAME).map
-RENAMED_MAP_COMPILED=maps/$(NEWNAME).bsp
-RENAMED_MAP_INFO=maps/$(NEWNAME).mapinfo
-RENAMED_MAP_SCREENSHOT=maps/$(NEWNAME).jpg
-RENAMED_MINIMAP=gfx/$(NEWNAME)_mini.tga
-# RENAMED_TEXTUREDIR=textures/$(NEWNAME)
-RENAMED_MAP_WAYPOINTS=maps/$(NEWNAME).waypoints
+FILES_RENAME=$(MAP_SOURCE) $(MAP_COMPILED) $(MAP_INFO) $(MAP_SCREENSHOT) $(MINIMAP) $(EXTRA_FILES_RENAME)
 __RENAME_INTERNAL_FILE_ACTION=echo
 
 .SUFFIXES: .bsp .map
-.PHONY: clean dist pk3 rename rename_copy __rename_internal release bsp_full bsp_vis bsp_light
+.PHONY: clean dist pk3 rename rename_copy __rename_internal release bsp bsp_full bsp_vis bsp_light bump_nocompile release_nocompile release_compile __release_internal
 
 
 all: $(MAP_COMPILED)
@@ -118,13 +120,18 @@ pk3: $(MAP_COMPILED)
 pk3: $(MINIMAP)
 pk3:
 	$(REMOVE_FILE) $(PK3NAME)
-	$(PK3_ADD) $(TEXTURES) $(SCRIPTS) $(MAP_COMPILED) $(MINIMAP) $(MAP_SOURCE) $(MAP_INFO) $(MAP_SCREENSHOT) $(MAP_WAYPOINTS)
+	$(PK3_ADD) $(SCRIPTS) $(MAP_COMPILED) $(MINIMAP) $(MAP_SOURCE) $(MAP_INFO) $(MAP_SCREENSHOT) $(EXTRA_FILES_RENAME)
+	$(PK3_ADD) -r $(TEXTURES) $(EXTRA_DIRS)
 
 clean:
 	$(REMOVE_FILE) $(PK3NAME) $(DIST_NAME)
 
-%.bsp : %.map
-	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_BSP)   $*.map
+$(MAP_COMPILED) : $(MAP_SOURCE)
+	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_BSP) $(MAP_SOURCE)
+
+#TODO: remove this and add proper dependencies to scripts and textures
+bsp:
+	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_BSP) $(MAP_SOURCE)
 
 bsp_vis: $(MAP_COMPILED)
 bsp_vis:
@@ -133,12 +140,13 @@ bsp_light: $(MAP_COMPILED)
 bsp_light:
 	$(Q3MAP2) $(Q3MAP2_FLAGS) $(Q3MAP2_FLAGS_LIGHT) $(MAP_SOURCE)
 
+bsp_full: bsp
 bsp_full: bsp_vis
 bsp_full: bsp_light
 bsp_full:
 
-gfx/%_mini.tga : %.bsp
-	$(Q3MAP2) -minimap -o gfx/$*_mini.tga $(MAP_COMPILED)
+$(MINIMAP) : $(MAP_COMPILED)
+	$(Q3MAP2) -minimap -o $(MINIMAP) $(MAP_COMPILED)
 
 
 rename: __RENAME_INTERNAL_FILE_ACTION=$(RENAME_FILE)
@@ -153,26 +161,55 @@ rename_link: __RENAME_INTERNAL_FILE_ACTION=$(LINK_FILE)
 rename_link: __rename_internal
 rename_link:
 
-__rename_internal: $(MAP_SOURCE)
-__rename_internal: $(MAP_COMPILED)
-__rename_internal: $(MAP_INFO)
-__rename_internal: $(MAP_SCREENSHOT)
-__rename_internal: $(MINIMAP)
-__rename_internal: $(MAP_WAYPOINTS)
+__rename_internal: $(FILES_RENAME)
 __rename_internal:
-	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_SOURCE))     $(RENAMED_MAP_SOURCE)
-	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_COMPILED))   $(RENAMED_MAP_COMPILED)
-	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_INFO))       $(RENAMED_MAP_INFO)
-	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_SCREENSHOT)) $(RENAMED_MAP_SCREENSHOT)
-	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MINIMAP))        $(RENAMED_MINIMAP)
-	$(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(MAP_WAYPOINTS))  $(RENAMED_MAP_WAYPOINTS)
+	$(foreach file, $(FILES_RENAME), $(__RENAME_INTERNAL_FILE_ACTION) $(notdir $(file)) $(subst $(MAPNAME),$(NEWNAME),$(file));)
+	
+	
+release_compile: $(MAP_COMPILED)
+release_compile: $(MINIMAP)
+release_compile: bsp_full
+release_compile: __release_internal
+release_compile:
 
-release: bsp_full
-release: release_nocompile
+release: $(MAP_COMPILED)
+release: $(MINIMAP)
+release: __release_internal
 release:
 
-release_nocompile: $(MAP_COMPILED)
-release_nocompile: $(MINIMAP)
+release_nocompile: bump_nocompile
+release_nocompile: __release_internal
 release_nocompile:
+	
+__release_internal:
 	make rename_link NEWNAME=$(MAPNAME)$(VERSION)
-	make pk3 MAPNAME=$(MAPNAME)$(VERSION) TEXTUREDIR=$(TEXTUREDIR)
+	make pk3 MAPNAME=$(MAPNAME)$(VERSION)
+
+bump_nocompile:
+	touch $(MAP_COMPILED)
+	touch $(MINIMAP)
+
+define AUTO_MAPINFO
+title $(MAPNAME)
+// description ...
+// author ...
+cdtrack 7
+// has weapons
+// has turrets
+// has vehicles
+gametype dm
+gametype lms
+gametype ka
+gametype kh
+gametype ca
+gametype tdm
+gametype ft
+// optional: fog density red green blue alpha mindist maxdist
+// optional: settemp_for_type (all|gametypename) cvarname value
+// optional: clientsettemp_for_type (all|gametypename) cvarname value
+// optional: size mins_x mins_y mins_z maxs_x maxs_y maxs_z
+// optional: hidden
+endef
+export AUTO_MAPINFO
+$(MAP_INFO):
+	echo "$$AUTO_MAPINFO" >$(MAP_INFO)

@@ -97,3 +97,22 @@ textures/canterlot/grate
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
+
+
+textures/canterlot/water
+{
+	qer_editorimage textures/liquids_water/water0.tga
+	qer_trans 20
+	surfaceparm nomarks
+	surfaceparm trans
+	surfaceparm water
+	surfaceparm nolightmap
+	cull none
+	q3map_globaltexture
+	{
+		map textures/liquids_water/water0.tga
+		tcmod scale 1.2 0.7
+		tcMod scroll 0.084 0.049
+		blendfunc blend
+	}
+}
