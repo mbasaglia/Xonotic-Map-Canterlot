@@ -1,7 +1,7 @@
 textures/canterlot/window_nm
 {
 	qer_editorimage textures/canterlot/window_nm.png
-	q3map_surfacelight 10000
+	q3map_surfacelight 900
 	
 	surfaceparm nolightmap
 	cull none
@@ -13,7 +13,7 @@ textures/canterlot/window_nm
 textures/canterlot/window_castle
 {
 	qer_editorimage textures/canterlot/window_castle.png
-	q3map_surfacelight 10000
+	q3map_surfacelight 900
 	
 	surfaceparm nolightmap
 	cull none
@@ -25,7 +25,7 @@ textures/canterlot/window_castle
 textures/canterlot/window_fancy
 {
 	qer_editorimage textures/canterlot/window_fancy.png
-	q3map_surfacelight 10000
+	q3map_surfacelight 900
 	
 	surfaceparm nolightmap
 	cull none
@@ -114,5 +114,15 @@ textures/canterlot/water
 		tcmod scale 1.2 0.7
 		tcMod scroll 0.084 0.049
 		blendfunc blend
+	}
+}
+
+textures/canterlot/crystal
+{
+	q3map_surfacelight 10
+	{
+		map textures/canterlot/crystal.jpg
+		tcgen environment
+		rgbgen wave sin .12 .2 0 0
 	}
 }
