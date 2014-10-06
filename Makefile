@@ -74,7 +74,7 @@ HOMEPATH=$(HOME)/.xonotic/
 
 TEXTURE_BLACKLIST= work_files
 EXTRA_DIRS=
-EXTRA_FILES_RENAME=
+EXTRA_FILES_RENAME=maps/canterlot.rtlights
 
 Q3MAP2_FLAGS_EXTRA=
 Q3MAP2_FLAGS= -v -connect 127.0.0.1:39000 -game xonotic -fs_basepath "$(BASEPATH)" -fs_homepath "$(HOMEPATH)" -fs_game data $(Q3MAP2_FLAGS_EXTRA)
