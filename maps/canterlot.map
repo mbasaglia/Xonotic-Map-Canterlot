@@ -2,6 +2,9 @@
 // entity 0
 {
 "classname" "worldspawn"
+"author" "Mattia 'Melanosuchus' Basaglia"
+"_description" "The capital city of the magical land of Equestria"
+"message" "Canterlot by Melanosuchus"
 // brush 0
 {
 brushDef
@@ -8470,7 +8473,7 @@ brushDef
 {
 brushDef
 {
-( 1720 -2240 608 ) ( 1720 -2224 608 ) ( 1752 -2240 608 ) ( ( 0 -0.001953125 3.8125 ) ( 0.001953125 0 5.5 ) ) canterlot/bricks_gray_aligned 0 0 0
+( 1720 -2240 608 ) ( 1720 -2224 608 ) ( 1752 -2240 608 ) ( ( 0.0009765625 -0 -0.25390625 ) ( 0 0.001953125 0.75 ) ) canterlot/bricks_gray_corner 0 0 0
 ( 1696 -2240 592 ) ( 1728 -2240 592 ) ( 1696 -2240 576 ) ( ( 0.0078125 0 240.25 ) ( 0 0.0078125 1.75 ) ) common/caulk 0 0 0
 ( 1696 -2240 592 ) ( 1696 -2240 576 ) ( 1696 -2224 592 ) ( ( 0.001953125 0 1018.4375 ) ( 0 0.001953125 0.4375 ) ) canterlot/bricks_gray_aligned 0 0 0
 ( 1728 -2224 544 ) ( 1696 -2224 544 ) ( 1728 -2240 544 ) ( ( -0.0078125 0 234 ) ( 0 -0.0078125 240.5 ) ) common/caulk 0 0 0
@@ -8614,7 +8617,7 @@ brushDef
 {
 brushDef
 {
-( 1760 -2192 608 ) ( 1744 -2192 608 ) ( 1760 -2160 608 ) ( ( -0.001953125 0 1020.171875 ) ( 0 -0.001953125 4.5625 ) ) canterlot/bricks_gray_aligned 0 0 0
+( 1760 -2192 608 ) ( 1744 -2192 608 ) ( 1760 -2160 608 ) ( ( 0.0009765625 -0 -0.25390625 ) ( 0 0.001953125 0.75 ) ) canterlot/bricks_gray_corner 0 0 0
 ( 1760 -2216 592 ) ( 1760 -2184 592 ) ( 1760 -2216 576 ) ( ( 0.0078125 0 14.8125 ) ( 0 0.0078125 1.75 ) ) common/caulk 0 0 0
 ( 1760 -2216 592 ) ( 1760 -2216 576 ) ( 1744 -2216 592 ) ( ( 0.001953125 0 1019.375 ) ( 0 0.001953125 0.4375 ) ) canterlot/bricks_gray_aligned 0 0 0
 ( 1744 -2184 544 ) ( 1744 -2216 544 ) ( 1760 -2184 544 ) ( ( 0 -0.0078125 237.75 ) ( 0.0078125 0 15.0625 ) ) common/caulk 0 0 0
@@ -9697,7 +9700,7 @@ brushDef
 ( 792 728 -320 ) ( 792 728 32 ) ( 856 728 -320 ) ( ( 0.015625 0 255.625 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
 ( 768 448 -320 ) ( 768 608 -320 ) ( 768 448 32 ) ( ( 0.0078125 0 -1.625 ) ( -0 0.0078125 0 ) ) canterlot/bricks_red 0 0 0
 ( 1120 1136 32 ) ( 1120 496 32 ) ( 784 1136 32 ) ( ( 0.015625 0 -0 ) ( -0 0.015625 0 ) ) common/caulk 0 0 0
-( 784 480 48 ) ( 784 1120 -480 ) ( 784 480 -480 ) ( ( 0.0078125 0 0.3125 ) ( 0 0.0078125 0 ) ) canterlot/bricks_green 0 0 0
+( 784 480 48 ) ( 784 1120 -480 ) ( 784 480 -480 ) ( ( 0.0078125 0 0 ) ( 0 0.0078125 0.375 ) ) canterlot/bricks_green 0 0 0
 ( 784 872 -128 ) ( 776 800 -128 ) ( 784 800 -128 ) ( ( 0 0.0416666679 204.3332519531 ) ( -0.0357142873 0 61.9999961853 ) ) common/caulk 0 0 0
 }
 }
@@ -19840,8 +19843,8 @@ brushDef
 ( 1056 -1888 -256 ) ( 1056 -1888 -512 ) ( 1056 -2112 -256 ) ( ( 0.00390625 -0 -0.125 ) ( 0 0.0078125 0 ) ) canterlot/bricks_gray_corner 0 0 0
 ( 672 -2112 -512 ) ( 1088 -2112 -512 ) ( 672 -1888 -512 ) ( ( 0.0078125 0 0 ) ( 0 0.0078125 0 ) ) common/caulk 0 0 0
 ( 696 -1984 -512 ) ( 696 -1984 -256 ) ( 1112 -1984 -512 ) ( ( 0.0078125 0 255.8125 ) ( 0 0.0078125 0 ) ) common/caulk 0 0 0
-( 928 -1896 -128 ) ( 744 -1896 -128 ) ( 928 -1896 -512 ) ( ( 0.015625 0 -0 ) ( -0 0.015625 0 ) ) common/caulk 0 0 0
-( 1048 -1984 -128 ) ( 1048 -1896 -512 ) ( 1048 -1896 -128 ) ( ( 0.015625 0 0 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
+( 928 -1904 -128 ) ( 744 -1904 -128 ) ( 928 -1904 -512 ) ( ( 0.015625 0 0 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
+( 1048 -1992 -128 ) ( 1048 -1904 -512 ) ( 1048 -1904 -128 ) ( ( 0.015625 0 255.875 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
 }
 }
 // brush 1579
@@ -20618,7 +20621,7 @@ brushDef
 ( 568 -2136 0 ) ( 568 -2136 -16 ) ( 568 -2208 0 ) ( ( 0.015625 0 -0 ) ( -0 0.015625 0 ) ) common/caulk 0 0 0
 ( 424 -2208 -16 ) ( 568 -2208 -16 ) ( 424 -2136 -16 ) ( ( 0.015625 0 -0 ) ( -0 0.015625 0 ) ) common/caulk 0 0 0
 ( 440 -2216 -16 ) ( 440 -2216 0 ) ( 584 -2216 -16 ) ( ( 0.015625 0 255.75 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
-( 440 -2216 -16 ) ( 440 -2144 -16 ) ( 440 -2216 0 ) ( ( 0.015625 0 255.875 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
+( 448 -2216 -16 ) ( 448 -2144 -16 ) ( 448 -2216 0 ) ( ( 0.015625 0 255.875 ) ( 0 0.015625 0 ) ) common/caulk 0 0 0
 }
 }
 // brush 1644
@@ -22813,7 +22816,7 @@ brushDef
 // entity 143
 {
 "classname" "weapon_rifle"
-"origin" "-512.000000 1336.000000 512.000000"
+"origin" "-512.000000 952.000000 512.000000"
 }
 // entity 144
 {
@@ -26175,4 +26178,87 @@ exx/base-metal05rust
 "origin" "400.000000 200.000000 -592.000000"
 "light" "50"
 "_color" "1 0.6 0.6"
+}
+// entity 295
+{
+"classname" "dom_controlpoint"
+"origin" "1152.000000 -792.000000 304.000000"
+}
+// entity 296
+{
+"classname" "dom_controlpoint"
+"origin" "672.000000 816.000000 -288.000000"
+}
+// entity 297
+{
+"classname" "dom_controlpoint"
+"origin" "-144.000000 -704.000000 -288.000000"
+}
+// entity 298
+{
+"classname" "dom_controlpoint"
+"origin" "1232.000000 -48.000000 2640.000000"
+}
+// entity 299
+{
+"classname" "dom_controlpoint"
+"origin" "1488.000000 -800.000000 -968.000000"
+}
+// entity 300
+{
+"classname" "dom_team"
+"origin" "672.000000 0.000000 768.000000"
+"model" "models/domination/dom_unclaimed.md3"
+}
+// entity 301
+{
+"classname" "dom_team"
+"origin" "672.000000 -32.000000 800.000000"
+"model" "models/domination/dom_red.md3"
+"netname" "^1Solar Empire^3"
+"cnt" "4"
+"noise" "domination/claim.wav"
+"noise1" "domination/claim.wav"
+}
+// entity 302
+{
+"classname" "dom_team"
+"origin" "672.000000 32.000000 800.000000"
+"model" "models/domination/dom_blue.md3"
+"netname" "^4New Lunar Republic^3"
+"cnt" "13"
+"noise" "domination/claim.wav"
+"noise1" "domination/claim.wav"
+}
+// entity 303
+{
+"classname" "dom_team"
+"origin" "672.000000 32.000000 736.000000"
+"model" "models/domination/dom_pink.md3"
+"netname" "^6Crystal Empire^3"
+"cnt" "9"
+"noise" "domination/claim.wav"
+"noise1" "domination/claim.wav"
+}
+// entity 304
+{
+"classname" "dom_team"
+"origin" "672.000000 -32.000000 736.000000"
+"model" "models/domination/dom_yellow.md3"
+"netname" "^3Twilight's Kingdom^3"
+"cnt" "12"
+"noise" "domination/claim.wav"
+"noise1" "domination/claim.wav"
+}
+// entity 305
+{
+"classname" "item_flag_team1"
+"origin" "1704.000000 -2184.000000 512.000000"
+"angle" "134.999985"
+}
+// entity 306
+{
+"classname" "item_flag_team2"
+"origin" "-512.000000 1352.000000 512.000000"
+"angle" "-90.000000"
 }
