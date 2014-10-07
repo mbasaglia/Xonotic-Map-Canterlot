@@ -119,7 +119,7 @@ textures/canterlot/water
 
 textures/canterlot/crystal
 {
-	q3map_surfacelight 10
+	q3map_surfacelight 50
 	{
 		map textures/canterlot/crystal.jpg
 		tcgen environment
